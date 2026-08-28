@@ -17,7 +17,7 @@ namespace order_book {
             explicit OrderBookSide(Side side);
             bool empty() const;
             void insert_order(Order* order);
-            std::int64_t get_best_price() const;
+            Price get_best_price() const;
             PriceLevel* get_best_price_level();
             const PriceLevel* get_best_price_level() const;
             PriceLevel* find_price_level(std::int32_t price);

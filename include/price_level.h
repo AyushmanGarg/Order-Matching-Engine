@@ -16,8 +16,8 @@ namespace order_book {
             Order* front();
             const Order* front() const;
             void pop_front();
-            std::int64_t get_total_quantity() const { return total_quantity; }
-            void reduce_total_quantity(std::int64_t amt) { total_quantity -= amt; }
+            std::int64_t get_total_quantity() const { return total_qty_at_price; }
+            void reduce_total_quantity(std::int64_t amt) { total_qty_at_price -= amt; }
             void remove_order(Order* order);
 
     };

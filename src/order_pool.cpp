@@ -24,7 +24,7 @@ namespace order_book {
 
     static constexpr std::uint32_t INVALID_INDEX = std::numeric_limits<std::uint32_t>::max();
 
-    OrderPool::OrderPool(std::size_t max_capacity): nodes(max_capacity), max_capacity(max_capacity), curr_size(0), size(0) {
+    OrderPool::OrderPool(std::size_t max_capacity): nodes(max_capacity), free_node(0), max_capacity(max_capacity), curr_size(0) {
         for(std::size_t i = 0 ; i<max_capacity ; i++) {
             nodes[i].next = (i+1 < max_capacity) ? (i+1) :  INVALID_INDEX;
         }
@@ -44,9 +44,9 @@ namespace order_book {
         
         std::uint32_t idx = free_node;
         Node& node = nodes[idx];
-        free_head = node.next;
+        free_node = node.next;
         node.next = INVALID_INDEX;
-        size++;
+        curr_size++;
 
         return &node.order;
     }
@@ -54,12 +54,12 @@ namespace order_book {
     void OrderPool::deallocate(Order* order) {
         if(!order) return;
         std::uint32_t idx = get_idx_from_ptr(order);
-        node[idx].next = free_node;
+        nodes[idx].next = free_node;
         free_node = idx;
-        size--;
+        curr_size--;
     }
 
-    std::uint32_t get_idx_from_ptr(const Order* order) {
+    std::uint32_t OrderPool::get_idx_from_ptr(const Order* order) const {
         const char* base_bit_address = reinterpret_cast<const char*>(nodes.data());
         const char* curr_ptr_bit_address = reinterpret_cast<const char*>(order);
 

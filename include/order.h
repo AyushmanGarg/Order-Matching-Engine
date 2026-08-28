@@ -3,12 +3,10 @@
 #include <cstdint>
 
 namespace order_book {
-    enum class Side : std::unit8_t {
-        // scoped enumeration so we need to access items using Side::BUY
+    enum class Side : std::uint8_t {
         BUY,
         SELL
     };
-    //__builtin_prefetch(cur->next, 0, 1); this tells cpu that we will be soon needing the data at this memory.  It hides the latency by overlapping the fetch with useful work. this is called software prefecthing.
     using OrderId = std::uint64_t;
     using Price = std::int32_t;
 
@@ -31,6 +29,7 @@ namespace order_book {
         Price price;
         std::int64_t quantity;
         std::int64_t remaining_quantity;
+        std::uint64_t timestamp;
     };
 
 }

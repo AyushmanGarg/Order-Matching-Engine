@@ -1,7 +1,7 @@
 #include "order_book_side.h"
 
 namespace order_book {
-    explicit OrderBookSide::OrderBookSide(Side side) : side(side) {}
+    OrderBookSide::OrderBookSide(Side side) : side(side) {}
 
     bool OrderBookSide::empty() const { return price_levels.empty();}
 
@@ -16,21 +16,21 @@ namespace order_book {
         if(price_levels.empty()) return 0;
 
         if(side == Side::BUY) return price_levels.rbegin()->first;
-        else if(side == Side::SELL) return price_levels.begin()->first;
+        else return price_levels.begin()->first;
     }
 
     PriceLevel* OrderBookSide::get_best_price_level() {
         if(price_levels.empty()) return nullptr;
 
         if(side == Side::BUY) return &price_levels.rbegin()->second;
-        else if(side == Side::SELL) return &price_levels.begin()->second;
+        else return &price_levels.begin()->second;
     }
 
     const PriceLevel* OrderBookSide::get_best_price_level() const {
         if(price_levels.empty()) return nullptr;
 
         if(side == Side::BUY) return &price_levels.rbegin()->second;
-        else if(side == Side::SELL) return &price_levels.begin()->second;
+        else return &price_levels.begin()->second;
     }
 
     PriceLevel* OrderBookSide::find_price_level(Price price) {

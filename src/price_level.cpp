@@ -8,24 +8,24 @@ namespace order_book {
         order->prev = tail;
 
         if(tail) tail->next = order;
-        else  head->next = order;
+        else  head = order;
 
         tail = order;
         total_qty_at_price += order->remaining_quantity;
     }
-        
+
     Order* PriceLevel::front() {
         return head;
     }
 
-    const Order* front() const {
+    const Order* PriceLevel::front() const {
         return head;
     }
 
-    void pop_front() {
+    void PriceLevel::pop_front() {
         if(!head) return;
 
-        total_qty_at_price -= head.remaining_quantity;
+        total_qty_at_price -= head->remaining_quantity;
         Order* tmp = head;
         head = head->next;
 
@@ -36,7 +36,7 @@ namespace order_book {
         tmp->prev = nullptr;
     }
 
-    void remove_order(Order* order) {
+    void PriceLevel::remove_order(Order* order) {
         if(!order) return;
 
         total_qty_at_price -= order->remaining_quantity;
@@ -53,7 +53,3 @@ namespace order_book {
         order->next = nullptr;
     }
 }
-
-/*
-why two front are defibned?
-*/

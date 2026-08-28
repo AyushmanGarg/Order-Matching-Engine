@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "order.h"
 
-using namespace order_book {
+namespace order_book {
 
     struct OrderHandle {
         Side side;
